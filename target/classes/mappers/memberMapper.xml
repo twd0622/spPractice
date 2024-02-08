@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+	<select id="insertMember" parameterType="map">
+		call proc_member_insertMember(#{member_id}, #{member_pass}, #{member_name});
+	</select>
+	
+	<select id="userCheck" parameterType="map" resultType="map">
+		call proc_member_userCheck(#{member_id}, #{member_pass});
+	</select>
+	
+	<select id="getInfo" parameterType="String" resultType="map">
+		call proc_member_getInfo(#{id});
+	</select>
+	
+	<select id="updateMember" statementType="CALLABLE" parameterType="map">
+		call proc_member_updateMember(
+			#{member_id, mode=IN, jdbcType=VARCHAR, javaType=String}
+			, #{member_pass, mode=IN, jdbcType=VARCHAR, javaType=String}
+			, #{new_member_pass, mode=IN, jdbcType=VARCHAR, javaType=String}
+			, #{member_name, mode=IN, jdbcType=VARCHAR, javaType=String}
+			, #{res, mode=OUT, jdbcType=VARCHAR, javaType=String}
+		);
+	</select>
+	
+	<select id="deleteMember" parameterType="String" resultType="map">
+		call proc_member_deleteMember(#{id});
+	</select>
+	
+	<select id="getMemberInfo" parameterType="String" resultType="map">
+		call proc_member_getMembersInfo();
+	</select>
+	
+	
+</mapper>
